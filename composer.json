@@ -1,0 +1,13 @@
+{
+    "name": "binancepay/gsmbinancepay-for-woocommerce",
+    "type": "project",
+    "license": "MIT",
+    "require": {},
+    "autoload":{
+        "psr-4":{"GSMBinancePay\\WC\\":"src"},
+         "classmap": [
+            "InstalledVersions.php"
+        ]
+    }
+
+}
