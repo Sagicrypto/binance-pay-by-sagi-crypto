@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:     Binance Pay  by SAGI Crypto
- * Plugin URI:      https://wordpress.org/plugins/binance-pay-by-sagi-crypto/
+ * Plugin Name:     SAGI Crypto integration for Binance Pay
+ * Plugin URI:      https://wordpress.org/plugins/sagi-crypto-integration-for-binance-pay/
  * Description:     This plugin allows all merchants to accept  cryptocurrency payments from their customers using the BinancePay platform. All payments are currently denominated in USDT (Tether). Payments are sent directly to your Binance funding wallet. Customers can pay from ANY funding wallet, in any cryptocurrency from their Binance account. No fees will apply to the users when using Binance Pay. Sagi crypto brings close digital world to the customer.
  * Author:          SAGI CRYPTO ,George Ster
  * Author URI:      https://mories.org/

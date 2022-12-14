@@ -27,12 +27,12 @@ class GSMBinancePayGateway extends \WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user facing set variables.
-		$this->title        = $this->get_option('title', 'BinancePay by SAGI crypto');
+		$this->title        = $this->get_option('title', 'SAGI Crypto integration for Binance Pay');
 		$this->description  = $this->get_option('description', 'You will be redirected to BinancePay to complete your purchase.');
 
 		// Admin facing title and description.
 	//	$this->method_title       = 'GSMBinancePay';
-		$this->method_title       = 'Binance Pay by SAGI Crypto';
+		$this->method_title       = 'SAGI Crypto integration for Binance Pay';
 		$this->method_description = __('BinancePay gateway supporting all available cryptocurrencies.', 'gsmbinancepay-for-woocommerce');
 
 		// Debugging & informational settings.

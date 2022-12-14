@@ -1,4 +1,4 @@
-=== Binance Pay  by SAGI Crypto ===
+=== SAGI Crypto integration for Binance Pay ===
 Contributors: George Ster
 Tags: payment gateway, WooCommerce, Binance, BinancePay, Cryptocurrency, Crypto, USDT,SAGI CRYPTO
 Requires at least: 5.2
@@ -8,7 +8,7 @@ Stable tag: 0.1.0
 License: MIT
 License URI: https://mories.org/
 
-BinancePay for WooCommerce  by SAGI Crypto allows you to accept payments from customers using the BinancePay* platform.
+SAGI Crypto integration for Binance Pay allows you to accept payments from customers using the BinancePay* platform.
 
 *Registration with BinancePay is required at https://merchant.binance.com/en
 
