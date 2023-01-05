@@ -5,36 +5,13 @@ declare(strict_types=1);
 namespace GSMBinancePay\WC\Http;
 
 use GSMBinancePay\WC\Exception\ConnectException;
-
 /**
- * HTTP Client using cURL to communicate.
+ * HTTP Client using wp http to communicate.
  */
 class CurlClient implements ClientInterface
 {
-    protected $curlOptions = [];
-
-    /**
-     * Inits curl session adding any additional curl options set.
-     * @return false|resource
-     */
-    protected function initCurl()
-    {
-        // We cannot set a return type here as it is "resource" for PHP < 8 and CurlHandle for PHP >= 8.
-        $ch = curl_init();
-        if ($ch && count($this->curlOptions)) {
-            curl_setopt_array($ch, $this->curlOptions);
-        }
-        return $ch;
-    }
-
-    /**
-     * Use this method if you need to set any special parameters like disable CURLOPT_SSL_VERIFYHOST and CURLOPT_SSL_VERIFYPEER.
-     * @return void
-     */
-    public function setCurlOptions(array $options)
-    {
-        $this->curlOptions = $options;
-    }
+   
+   
 
     /**
      * @inheritdoc
@@ -50,48 +27,43 @@ class CurlClient implements ClientInterface
             $flatHeaders[] = $key . ': ' . $value;
         }
 
-        $ch = $this->initCurl();
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-		// Seems BinancePay does not support HTTP2, so set 1.1 explicitly.
-	    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        $args = [
+            'method' => $method,
+            'timeout' => 30,
+            'headers' =>  $flatHeaders //add headers here
+        ];
 
         if ($body !== '') {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+            $args['body']=json_encode($body);
         }
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $flatHeaders);
+        $response=wp_remote_request($url, $args); 
 
-        $response = curl_exec($ch);
+        $status = wp_remote_retrieve_response_code( $response );
+       
 
-        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+
+
+       // $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 
         $responseHeaders = [];
         $responseBody = '';
 
         if ($response) {
-            $responseString = is_string($response) ? $response : '';
-            if ($responseString && $headerSize) {
-                $responseBody = substr($responseString, $headerSize);
-                $headerPart = substr($responseString, 0, $headerSize);
-                $headerParts = explode("\n", $headerPart);
-                foreach ($headerParts as $headerLine) {
-                    $headerLine = trim($headerLine);
-                    if ($headerLine) {
-                        $parts = explode(':', $headerLine);
-                        if (count($parts) === 2) {
-                            $key = $parts[0];
-                            $value = $parts[1];
-                            $responseHeaders[$key] = $value;
-                        }
-                    }
-                }
+             $responseBody = wp_remote_retrieve_body( $response );
+             $responseString = is_string($responseBody) ? $responseBody : '';
+             $headerParts = wp_remote_retrieve_headers( $response );
+             if($headerParts!=1)
+             {
+                $responseHeaders=$headerParts;
+             }
+
             }
-        } else {
-            $errorMessage = curl_error($ch);
-            $errorCode = curl_errno($ch);
+        else {
+           // $errorMessage = curl_error($ch);
+           // $errorCode = curl_errno($ch);
+            $errorMessage=wp_remote_retrieve_response_message( $response );
+            $errorCode=$status;
+
             throw new ConnectException($errorMessage, $errorCode);
         }
 
