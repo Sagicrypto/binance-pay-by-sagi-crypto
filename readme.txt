@@ -2,8 +2,8 @@
 Contributors: George Ster
 Tags: payment gateway, WooCommerce, Binance, BinancePay, Cryptocurrency, Crypto, USDT,SAGI CRYPTO
 Requires at least: 5.2
-Tested up to: 6.0
-Requires PHP: 7.4
+Tested up to: 6.1.1
+Requires PHP: 8.0
 Stable tag: 0.1.0
 License: MIT
 License URI: https://mories.org/
@@ -18,7 +18,7 @@ This plugin allows all merchants to accept  cryptocurrency payments from their c
 
 == Installation ==
 
-This plugin requires WooCommerce and PHP 7.4 or newer. Please make sure you meet those requirements..
+This plugin requires WooCommerce and PHP 8.0 or newer. Please make sure you meet those requirements..
 
 Before installing this plugin, please make sure you are approved for the BinancePay platform.
 
@@ -34,5 +34,5 @@ Before installing this plugin, please make sure you are approved for the Binance
 
 
 == Changelog ==
-= 0.1.0 :: 2022-04-27 =
+= 0.1.0 :: 2023-01-09 =
 *  Initial release.

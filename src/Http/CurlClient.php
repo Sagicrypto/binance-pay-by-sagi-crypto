@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GSMBinancePay\WC\Http;
 
 use GSMBinancePay\WC\Exception\ConnectException;
+
 /**
  * HTTP Client using wp http to communicate.
  */
@@ -24,26 +25,23 @@ class CurlClient implements ClientInterface
     ): ResponseInterface {
         $flatHeaders = [];
         foreach ($headers as $key => $value) {
-            $flatHeaders[] = $key . ': ' . $value;
+            $flatHeaders[$key] = $value;
         }
 
         $args = [
-            'method' => $method,
+            'method' => strtoupper($method),
             'timeout' => 30,
             'headers' =>  $flatHeaders //add headers here
         ];
-
+ 
         if ($body !== '') {
-            $args['body']=json_encode($body);
+            $args['body']=$body;
         }
+          
         $response=wp_remote_request($url, $args); 
 
         $status = wp_remote_retrieve_response_code( $response );
        
-
-
-
-       // $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 
         $responseHeaders = [];
         $responseBody = '';
@@ -52,10 +50,12 @@ class CurlClient implements ClientInterface
              $responseBody = wp_remote_retrieve_body( $response );
              $responseString = is_string($responseBody) ? $responseBody : '';
              $headerParts = wp_remote_retrieve_headers( $response );
-             if($headerParts!=1)
-             {
-                $responseHeaders=$headerParts;
-             }
+           //  if($headerParts!=1)
+          //   {
+             $responseHeaders = (array) $headerParts;
+
+               
+           //  }
 
             }
         else {
